@@ -11,10 +11,10 @@ import {
   ShoppingBag,
   Users,
 } from 'lucide-react'
-import { Tooltip, TooltipProvider, TooltipTrigger } from './ui/tooltip'
-import { TooltipContent } from '@radix-ui/react-tooltip'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import { UserDropdown } from './user-dropdown'
+import { IUser } from '@/interfaces/IUser'
 
 export function Sidebar() {
   const pathname = usePathname()
@@ -22,6 +22,13 @@ export function Sidebar() {
   const isActive = (path: string) => {
     return pathname === path
   }
+
+  const user: IUser = {
+    name: 'Pedro Henrique.',
+    email: 'pedro@test.com',
+    image: 'https://github.com/Peedrohenrique.png',
+  }
+
   return (
     <div className="flex flex-col w-full bg-muted/40">
       <aside className="fixed inset-y-0 left-0 z-10 hidden w-64 border-r border-gray-200 bg-background sm:flex flex-col">
@@ -94,21 +101,15 @@ export function Sidebar() {
             Autores
           </Link>
         </nav>
-        <nav className="mt-auto flex flex-col items-center gap-4 px-2 py-5">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link
-                  href="/"
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  <LogOut className="w-4 h-4" />
-                  <span className="sr-only">Sair</span>
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent side="right">Sair</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+        <nav className="mt-auto flex flex-col items-lert gap-4 px-2 py-5">
+          {/* <Link
+            href="/"
+            className="flex items-center gap-4 px-4 text-muted-foreground font-normal text-base hover:text-foreground"
+          >
+            <LogOut className="w-5 h-5" />
+            Sair
+          </Link> */}
+          <UserDropdown user={user} />
         </nav>
       </aside>
 
