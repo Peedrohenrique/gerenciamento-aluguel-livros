@@ -16,7 +16,7 @@ export default function Home() {
       <Card className="relative flex h-[200px] w-full flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl">
         <BlurIn
           className="text-6xl font-bold"
-          word="Gerenciamento"
+          word="Gerenciamento de Aluguel de Livros"
           duration={0.5}
         />
         <BorderBeam size={250} duration={12} delay={9} />
