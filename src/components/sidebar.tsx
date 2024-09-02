@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link'
 import { Button } from './ui/button'
 import { Sheet, SheetContent, SheetTrigger } from './ui/sheet'
@@ -12,8 +13,15 @@ import {
 } from 'lucide-react'
 import { Tooltip, TooltipProvider, TooltipTrigger } from './ui/tooltip'
 import { TooltipContent } from '@radix-ui/react-tooltip'
+import { usePathname } from 'next/navigation'
+import { cn } from '@/lib/utils'
 
 export function Sidebar() {
+  const pathname = usePathname()
+
+  const isActive = (path: string) => {
+    return pathname === path
+  }
   return (
     <div className="flex flex-col w-full bg-muted/40">
       <aside className="fixed inset-y-0 left-0 z-10 hidden w-64 border-r border-gray-200 bg-background sm:flex flex-col">
@@ -32,31 +40,43 @@ export function Sidebar() {
 
           <Link
             href="dashboard"
-            className="flex items-center gap-4 px-4 text-muted-foreground font-normal text-base hover:text-foreground"
+            className={cn([
+              isActive('/admin/dashboard') && 'bg-secondary rounded-md',
+              `flex items-center gap-4 px-4 text-muted-foreground font-normal text-base hover:text-foreground`,
+            ])}
             prefetch={false}
           >
             <Home className="w-5 h-5" />
             dashboard
           </Link>
           <Link
-            href="#"
-            className="flex items-center gap-4 px-4 text-muted-foreground font-normal text-base hover:text-foreground"
+            href="alugueis"
+            className={cn([
+              isActive('/admin/alugueis') && 'bg-secondary rounded-md',
+              `flex items-center gap-4 px-4 text-muted-foreground font-normal text-base hover:text-foreground`,
+            ])}
             prefetch={false}
           >
             <ShoppingBag className="w-5 h-5" />
             Aluguéis
           </Link>
           <Link
-            href="#"
-            className="flex items-center gap-4 px-4 text-muted-foreground font-normal text-base hover:text-foreground"
+            href="livros"
+            className={cn([
+              isActive('/admin/livros') && 'bg-secondary rounded-md',
+              `flex items-center gap-4 px-4 text-muted-foreground font-normal text-base hover:text-foreground`,
+            ])}
             prefetch={false}
           >
             <Package className="w-5 h-5" />
             Livros
           </Link>
           <Link
-            href="autores"
-            className="flex items-center gap-4 px-4 text-muted-foreground font-normal text-base hover:text-foreground"
+            href="clientes"
+            className={cn([
+              isActive('/admin/clientes') && 'bg-secondary rounded-md',
+              `flex items-center gap-4 px-4 text-muted-foreground font-normal text-base hover:text-foreground`,
+            ])}
             prefetch={false}
           >
             <Users className="w-5 h-5" />
@@ -64,7 +84,10 @@ export function Sidebar() {
           </Link>
           <Link
             href="autores"
-            className="flex items-center gap-4 px-4 text-muted-foreground font-normal text-base hover:text-foreground"
+            className={cn([
+              isActive('/admin/autores') && 'bg-secondary rounded-md',
+              `flex items-center gap-4 px-4 text-muted-foreground font-normal text-base hover:text-foreground`,
+            ])}
             prefetch={false}
           >
             <Users className="w-5 h-5" />
