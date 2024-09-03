@@ -13,7 +13,7 @@ export default async function Layout({ children }: PropsWithChildren) {
     <div className={cn('min-h-screen bg-background font-sans antialiased')}>
       <Sidebar />
       <main className={cn('flex-1 sm:ml-64 p-10', poppins.className)}>
-        {children}
+        {children}local
       </main>
     </div>
   )
