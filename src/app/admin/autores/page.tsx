@@ -1,5 +1,5 @@
-import { AutorTable } from '@/components/autorTable'
 import { Button } from '@/components/ui/button'
+import { AutorTable } from './_components/autorTable'
 
 function Autores() {
   return (
