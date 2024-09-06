@@ -1,13 +1,8 @@
-import { Button } from '@/components/ui/button'
-import { AutorTable } from './_components/autorTable'
+import { AutorTable } from './_components/table'
+import { Create } from './_components/create'
 
 function Autores() {
   return (
-    // <div>
-    //   <h1 className="text-5xl font-bold">Autores</h1>
-    //   <AutorTable />
-    // </div>
-
     <div className="">
       <div className="flex items-center justify-between lg:justify-between">
         <div className="flex flex-col gap-3">
@@ -16,7 +11,7 @@ function Autores() {
             Todas as informações sobre os autores de livros
           </p>
         </div>
-        <Button className="px-10">Novo</Button>
+        <Create />
       </div>
 
       <AutorTable />
