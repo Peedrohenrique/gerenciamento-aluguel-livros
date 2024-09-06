@@ -1,9 +1,16 @@
-function Dashboard() {
+import { ChartOverview } from './_components/chart'
+import { Client } from './_components/client'
+import { Sales } from './_components/sales'
+
+export default function Dashboard() {
   return (
-    <div className="">
-      <h1 className="text-6xl font-bold">Dashboard</h1>
-    </div>
+    <main>
+      <Sales />
+
+      <section className="mt-4 flex flex-col md:flex-row gap-4">
+        <ChartOverview />
+        <Client />
+      </section>
+    </main>
   )
 }
-
-export default Dashboard
