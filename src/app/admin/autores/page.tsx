@@ -1,7 +1,10 @@
 import { AutorTable } from './_components/table'
 import { Create } from './_components/create'
+// import { fetchAllAuthors } from '@/services/autor'
 
-function Autores() {
+async function Autores() {
+  // const autors = await fetchAllAuthors()
+
   return (
     <div className="">
       <div className="flex items-center justify-between lg:justify-between">
