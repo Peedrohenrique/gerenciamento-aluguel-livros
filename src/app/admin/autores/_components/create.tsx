@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
 
 export function Create() {
   return (
@@ -17,7 +18,7 @@ export function Create() {
       <DialogTrigger asChild>
         <Button className="px-10">Novo +</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>Criar Autor</DialogTitle>
           <DialogDescription>
@@ -29,13 +30,25 @@ export function Create() {
             <Label htmlFor="nome" className="text-right">
               Nome
             </Label>
-            <Input id="name" className="col-span-3" />
+            <Input id="name" type="text" className="col-span-3" />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="biografia" className="text-right">
+              Data nascimento
+            </Label>
+            <Input id="biografia" type="date" className="col-span-3" />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="biografia" className="text-right">
+              Nacionalidade
+            </Label>
+            <Input id="biografia" className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="biografia" className="text-right">
               Biografia
             </Label>
-            <Input id="biografia" className="col-span-3" />
+            <Textarea id="biografia" className="col-span-3" />
           </div>
         </div>
         <DialogFooter>
