@@ -14,9 +14,7 @@ export function Client() {
     <Card className="flex-1">
       <CardHeader>
         <div className="flex items-center justify-center">
-          <CardTitle className="text-lg sm:text-xl text-gray-800">
-            Últimos clientes
-          </CardTitle>
+          <CardTitle className="text-lg sm:text-xl">Últimos clientes</CardTitle>
           <CircleDollarSign className="ml-auto w-4 h-4" />
         </div>
         <CardDescription>Novos clientes nas últimas 24 horas</CardDescription>

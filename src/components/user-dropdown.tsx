@@ -1,3 +1,4 @@
+'use client'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
@@ -11,6 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { IUser } from '@/interfaces/IUser'
 import { LogOut, Settings2, UserCog } from 'lucide-react'
+import { UseTheme } from './use-theme'
 type UserDropdownProps = {
   user: IUser
 }
@@ -23,7 +25,7 @@ export function UserDropdown({ user }: UserDropdownProps) {
       <DropdownMenuTrigger asChild>
         <Button
           variant="link"
-          className="relative h-8 flex items-center justify-between w-full space-x-2 !px-0"
+          className="relative h-8 flex items-center justify-between w-full space-x-2 px-0"
         >
           <Avatar className="h-8 w-8">
             <AvatarImage src={user.image as string} alt={user.name as string} />
@@ -51,6 +53,11 @@ export function UserDropdown({ user }: UserDropdownProps) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
+          <DropdownMenuItem>
+            <UseTheme />
+            Tema
+          </DropdownMenuItem>
+
           <DropdownMenuItem>
             <Settings2 className="w-3 h-3 mr-3" />
             Configuraçoes

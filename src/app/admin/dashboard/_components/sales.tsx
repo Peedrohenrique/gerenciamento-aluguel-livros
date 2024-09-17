@@ -13,9 +13,7 @@ export function Sales() {
       <Card>
         <CardHeader>
           <div className="flex items-center justify-center">
-            <CardTitle className="text-lg sm:text-xl text-gray-800">
-              Total aluguel
-            </CardTitle>
+            <CardTitle className="text-lg sm:text-xl ">Total aluguel</CardTitle>
             <DollarSign className="ml-auto w-4 h-4" />
           </div>
           <CardDescription>Total aluguéis em 30 dias</CardDescription>
@@ -28,9 +26,7 @@ export function Sales() {
       <Card>
         <CardHeader>
           <div className="flex items-center justify-center">
-            <CardTitle className="text-lg sm:text-xl text-gray-800">
-              Total cliente
-            </CardTitle>
+            <CardTitle className="text-lg sm:text-xl">Total cliente</CardTitle>
             <CircleUserRound className="ml-auto w-4 h-4" />
           </div>
           <CardDescription>Total de todos os clientes</CardDescription>
@@ -43,9 +39,7 @@ export function Sales() {
       <Card>
         <CardHeader>
           <div className="flex items-center justify-center">
-            <CardTitle className="text-lg sm:text-xl text-gray-800">
-              Total livro
-            </CardTitle>
+            <CardTitle className="text-lg sm:text-xl">Total livro</CardTitle>
             <BookOpen className="ml-auto w-4 h-4" />
           </div>
           <CardDescription>Total de todos os livro</CardDescription>
@@ -58,9 +52,7 @@ export function Sales() {
       <Card>
         <CardHeader>
           <div className="flex items-center justify-center">
-            <CardTitle className="text-lg sm:text-xl text-gray-800">
-              Total autor
-            </CardTitle>
+            <CardTitle className="text-lg sm:text-xl">Total autor</CardTitle>
             <Users className="ml-auto w-4 h-4" />
           </div>
           <CardDescription>Total de todos os autores</CardDescription>

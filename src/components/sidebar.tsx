@@ -15,6 +15,7 @@ import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { UserDropdown } from './user-dropdown'
 import { IUser } from '@/interfaces/IUser'
+import { UseTheme } from './use-theme'
 
 export function Sidebar() {
   const pathname = usePathname()
@@ -31,9 +32,9 @@ export function Sidebar() {
 
   return (
     <div className="flex flex-col w-full bg-muted/40">
-      <aside className="fixed inset-y-0 left-0 z-10 hidden w-64 border-r border-gray-200 bg-background sm:flex flex-col">
+      <aside className="fixed inset-y-0 left-0 z-10 hidden w-64 border-r  bg-background sm:flex flex-col">
         <nav className="grid gap-6 text-lg font-medium">
-          <div className="flex text-muted-foreground border-b border-gray-200 py-3 font-normal text-lg hover:text-foreground ml-1">
+          <div className="flex text-muted-foreground border-b  py-3 font-normal text-lg hover:text-foreground ml-1">
             <Link
               href="#"
               className="flex h-10 w-10 bg-primary rounded-full text-lg items-center justify-center text-primary-foreground md:text-base"
@@ -42,7 +43,10 @@ export function Sidebar() {
               <BookOpen className="w-5 h-5" />
               <span className="sr-only">Logo</span>
             </Link>
-            <span className="m-auto ml-4">Gerenciamento Livros</span>
+            <div className="flex">
+              <span className="m-auto ml-4">Gerenciamento Livros</span>
+              <UseTheme />
+            </div>
           </div>
 
           <Link
@@ -67,6 +71,7 @@ export function Sidebar() {
             <ShoppingBag className="w-5 h-5" />
             Aluguéis
           </Link>
+
           <Link
             href="livros"
             className={cn([
