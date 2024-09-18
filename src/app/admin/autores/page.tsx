@@ -1,9 +1,9 @@
 import { AutorTable } from './_components/table'
 import { Create } from './_components/create'
-// import { fetchAllAuthors } from '@/services/autor'
+import { fetchAllAuthors } from '@/services/autor'
 
 async function Autores() {
-  // const autors = await fetchAllAuthors()
+  const data = await fetchAllAuthors()
 
   return (
     <div className="">
@@ -17,7 +17,7 @@ async function Autores() {
         <Create />
       </div>
 
-      <AutorTable />
+      <AutorTable data={data} />
     </div>
   )
 }

@@ -35,97 +35,11 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Edit } from './edit'
+import { IAutor } from '@/interfaces/IAutor'
 
-export type Autor = {
-  id: string
-  nome: string
-  email: string
-  status: string
-  cidade: string
-}
-
-const data: Autor[] = [
-  {
-    id: '1',
-    nome: 'João Silva',
-    email: 'joao.silva@gmail.com',
-    status: 'Ativo',
-    cidade: 'São Paulo',
-  },
-  {
-    id: '2',
-    nome: 'Maria Oliveira',
-    email: 'maria.oliveira@gmail.com',
-    status: 'Inativo',
-    cidade: 'Rio de Janeiro',
-  },
-  {
-    id: '3',
-    nome: 'Carlos Santos',
-    email: 'carlos.santos@gmail.com',
-    status: 'Ativo',
-    cidade: 'Belo Horizonte',
-  },
-  {
-    id: '4',
-    nome: 'Ana Pereira',
-    email: 'ana.pereira@gmail.com',
-    status: 'Ativo',
-    cidade: 'Porto Alegre',
-  },
-  {
-    id: '5',
-    nome: 'Luís Costa',
-    email: 'luis.costa@gmail.com',
-    status: 'Inativo',
-    cidade: 'Curitiba',
-  },
-  {
-    id: '6',
-    nome: 'Fernanda Almeida',
-    email: 'fernanda.almeida@gmail.com',
-    status: 'Ativo',
-    cidade: 'Fortaleza',
-  },
-  {
-    id: '7',
-    nome: 'Paulo Mendes',
-    email: 'paulo.mendes@gmail.com',
-    status: 'Ativo',
-    cidade: 'Brasília',
-  },
-  {
-    id: '8',
-    nome: 'Beatriz Lima',
-    email: 'beatriz.lima@gmail.com',
-    status: 'Inativo',
-    cidade: 'Salvador',
-  },
-  {
-    id: '9',
-    nome: 'Ricardo Sousa',
-    email: 'ricardo.sousa@gmail.com',
-    status: 'Ativo',
-    cidade: 'Recife',
-  },
-  {
-    id: '10',
-    nome: 'Juliana Rocha',
-    email: 'juliana.rocha@gmail.com',
-    status: 'Ativo',
-    cidade: 'Florianópolis',
-  },
-  {
-    id: '11',
-    nome: 'Mariana Farias',
-    email: 'mariana.farias@gmail.com',
-    status: 'Inativo',
-    cidade: 'Manaus',
-  },
-]
-
-export function AutorTable() {
+export function AutorTable({ data }: { data: IAutor[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([])
+
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
   )
@@ -140,43 +54,49 @@ export function AutorTable() {
     setIsEditOpen(true)
   }
 
-  const columns: ColumnDef<Autor>[] = [
-    {
-      accessorKey: 'status',
-      header: 'Status',
-      cell: ({ row }) => (
-        <div className="capitalize">{row.getValue('status')}</div>
-      ),
-    },
+  const columns: ColumnDef<IAutor>[] = [
     {
       accessorKey: 'nome',
-      header: 'Nome',
-      cell: ({ row }) => (
-        <div className="capitalize">{row.getValue('nome')}</div>
-      ),
-    },
-    {
-      accessorKey: 'email',
       header: ({ column }) => {
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
-            E-mail
+            Nome
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         )
       },
       cell: ({ row }) => (
-        <div className="lowercase">{row.getValue('email')}</div>
+        <div className="lowercase">{row.getValue('nome')}</div>
       ),
     },
     {
-      accessorKey: 'cidade',
-      header: () => <div className="">Cidade</div>,
+      accessorKey: 'biografia',
+      header: () => <div className="">Biografia</div>,
+      cell: ({ row }) => {
+        const biografia = row.getValue('biografia') as string
+        const biografiaCurta =
+          typeof biografia === 'string' && biografia.length > 57
+            ? `${biografia.slice(0, 57)}...`
+            : biografia
+        return <div className="font-medium">{biografiaCurta}</div>
+      },
+    },
+
+    {
+      accessorKey: 'dataNascimento',
+      header: 'Data Nascimento',
       cell: ({ row }) => (
-        <div className=" font-medium">{row.getValue('cidade')}</div>
+        <div className="capitalize">{row.getValue('dataNascimento')}</div>
+      ),
+    },
+    {
+      accessorKey: 'nacionalidade',
+      header: 'Nacionalidade',
+      cell: ({ row }) => (
+        <div className="capitalize">{row.getValue('nacionalidade')}</div>
       ),
     },
     {
@@ -195,13 +115,15 @@ export function AutorTable() {
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Ações</DropdownMenuLabel>
                 <DropdownMenuItem
-                  onClick={() => navigator.clipboard.writeText(row.original.id)}
+                  onClick={() =>
+                    navigator.clipboard.writeText(row.original.id!)
+                  }
                 >
                   Copiar ID
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>Ver</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleEdit(row.original.id)}>
+                <DropdownMenuItem onClick={() => handleEdit(row.original.id!)}>
                   {' '}
                   Editar
                 </DropdownMenuItem>
