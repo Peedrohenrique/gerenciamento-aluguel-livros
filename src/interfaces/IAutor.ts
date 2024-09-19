@@ -2,6 +2,6 @@ export interface IAutor {
   id?: string
   nome: string
   biografia: string
-  dataNascimento: string
+  data_nascimento: string
   nacionalidade: string
 }

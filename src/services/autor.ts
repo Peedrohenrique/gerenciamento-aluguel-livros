@@ -1,9 +1,11 @@
+'use server'
 import { IAutor } from '@/interfaces/IAutor'
+import { revalidatePath } from 'next/cache'
 
 // Função para buscar todos os autores
 export const fetchAllAuthors = async (): Promise<IAutor[]> => {
   try {
-    const response = await fetch('http://localhost:8080/autores')
+    const response = await fetch('http://localhost:3000/autores')
     if (!response.ok) {
       const errorMessage = await response.text()
       throw new Error(`Erro ao buscar autores: ${errorMessage}`)
@@ -19,7 +21,7 @@ export const fetchAllAuthors = async (): Promise<IAutor[]> => {
 // Função para buscar um autor por ID
 export const fetchAuthorById = async (id: number): Promise<IAutor> => {
   try {
-    const response = await fetch(`http://localhost:8080/autores/${id}`)
+    const response = await fetch(`http://localhost:3000/autores/${id}`)
     if (!response.ok) {
       const errorMessage = await response.text()
       throw new Error(`Erro ao buscar autor: ${errorMessage}`)
@@ -35,7 +37,7 @@ export const fetchAuthorById = async (id: number): Promise<IAutor> => {
 // Função para adicionar um novo autor
 export const createAuthor = async (author: IAutor): Promise<IAutor> => {
   try {
-    const response = await fetch('http://localhost:8080/autores', {
+    const response = await fetch('http://localhost:3000/autores', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -47,6 +49,7 @@ export const createAuthor = async (author: IAutor): Promise<IAutor> => {
       throw new Error(`Erro ao criar autor: ${errorMessage}`)
     }
     const data: IAutor = await response.json()
+    revalidatePath('/admin/autores')
     return data
   } catch (error) {
     console.error('Erro ao criar autor:', error)
@@ -60,7 +63,7 @@ export const updateAuthor = async (
   author: IAutor,
 ): Promise<IAutor> => {
   try {
-    const response = await fetch(`http://localhost:8080/autores/${id}`, {
+    const response = await fetch(`http://localhost:3000/autores/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -72,6 +75,7 @@ export const updateAuthor = async (
       throw new Error(`Erro ao atualizar autor: ${errorMessage}`)
     }
     const data: IAutor = await response.json()
+    revalidatePath('/admin/autores')
     return data
   } catch (error) {
     console.error('Erro ao atualizar autor:', error)
@@ -82,13 +86,15 @@ export const updateAuthor = async (
 // Função para excluir um autor por ID
 export const deleteAuthor = async (id: number): Promise<void> => {
   try {
-    const response = await fetch(`http://localhost:8080/autores/${id}`, {
+    const response = await fetch(`http://localhost:3000/autores/${id}`, {
       method: 'DELETE',
     })
+
     if (!response.ok) {
       const errorMessage = await response.text()
       throw new Error(`Erro ao excluir autor: ${errorMessage}`)
     }
+    revalidatePath('/admin/autores')
   } catch (error) {
     console.error('Erro ao excluir autor:', error)
     throw new Error('Erro ao excluir autor')

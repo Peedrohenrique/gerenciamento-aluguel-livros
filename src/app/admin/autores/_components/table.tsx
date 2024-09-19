@@ -36,6 +36,7 @@ import {
 } from '@/components/ui/table'
 import { Edit } from './edit'
 import { IAutor } from '@/interfaces/IAutor'
+import { deleteAuthor } from '@/services/autor'
 
 export function AutorTable({ data }: { data: IAutor[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -52,6 +53,11 @@ export function AutorTable({ data }: { data: IAutor[] }) {
   const handleEdit = (id: string) => {
     setAuthorId(id)
     setIsEditOpen(true)
+  }
+
+  const handleDelete = async (id: number) => {
+    await deleteAuthor(id)
+    console.log('delete', id)
   }
 
   const columns: ColumnDef<IAutor>[] = [
@@ -86,10 +92,10 @@ export function AutorTable({ data }: { data: IAutor[] }) {
     },
 
     {
-      accessorKey: 'dataNascimento',
+      accessorKey: 'data_nascimento',
       header: 'Data Nascimento',
       cell: ({ row }) => (
-        <div className="capitalize">{row.getValue('dataNascimento')}</div>
+        <div className="capitalize">{row.getValue('data_nascimento')}</div>
       ),
     },
     {
@@ -127,7 +133,11 @@ export function AutorTable({ data }: { data: IAutor[] }) {
                   {' '}
                   Editar
                 </DropdownMenuItem>
-                <DropdownMenuItem>Deletar</DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => handleDelete(Number(row.original.id!))}
+                >
+                  Deletar
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
