@@ -47,10 +47,10 @@ export function AutorTable({ data }: { data: IAutor[] }) {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
 
-  const [authorId, setAuthorId] = React.useState<string | null>(null) // Estado para armazenar o ID do autor
+  const [authorId, setAuthorId] = React.useState<number | null>(null) // Estado para armazenar o ID do autor
   const [isEditOpen, setIsEditOpen] = React.useState(false) // Estado para controlar a exibição do modal
 
-  const handleEdit = (id: string) => {
+  const handleEdit = (id: number) => {
     setAuthorId(id)
     setIsEditOpen(true)
   }
@@ -129,12 +129,14 @@ export function AutorTable({ data }: { data: IAutor[] }) {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>Ver</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleEdit(row.original.id!)}>
+                <DropdownMenuItem
+                  onClick={() => handleEdit(Number(row.original.id))}
+                >
                   {' '}
                   Editar
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => handleDelete(Number(row.original.id!))}
+                  onClick={() => handleDelete(Number(row.original.id))}
                 >
                   Deletar
                 </DropdownMenuItem>
