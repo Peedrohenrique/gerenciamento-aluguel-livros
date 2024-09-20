@@ -12,7 +12,7 @@ export default function Home() {
   const router = useRouter()
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24 overflow-hidden">
+    <main className="flex min-h-screen flex-col items-center p-5 overflow-hidden">
       <Card className="relative flex h-[200px] w-full flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl">
         <BlurIn
           className="text-6xl font-bold"

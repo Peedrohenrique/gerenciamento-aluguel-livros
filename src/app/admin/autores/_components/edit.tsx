@@ -99,6 +99,7 @@ export function Edit({
     if (authorId) {
       fetchAuthor()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authorId])
 
   async function fetchAuthor() {

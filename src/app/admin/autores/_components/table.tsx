@@ -36,7 +36,8 @@ import {
 } from '@/components/ui/table'
 import { Edit } from './edit'
 import { IAutor } from '@/interfaces/IAutor'
-import { deleteAuthor } from '@/services/autor'
+
+import { AlertDelete } from '@/components/alert-delete'
 
 export function AutorTable({ data }: { data: IAutor[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -49,6 +50,7 @@ export function AutorTable({ data }: { data: IAutor[] }) {
 
   const [authorId, setAuthorId] = React.useState<number | null>(null) // Estado para armazenar o ID do autor
   const [isEditOpen, setIsEditOpen] = React.useState(false) // Estado para controlar a exibição do modal
+  const [isDeleteOpen, setIsDeleteOpen] = React.useState(false) // Estado para controlar a exibição do modal
 
   const handleEdit = (id: number) => {
     setAuthorId(id)
@@ -56,7 +58,8 @@ export function AutorTable({ data }: { data: IAutor[] }) {
   }
 
   const handleDelete = async (id: number) => {
-    await deleteAuthor(id)
+    setAuthorId(id)
+    setIsDeleteOpen(true)
   }
 
   const columns: ColumnDef<IAutor>[] = [
@@ -91,7 +94,7 @@ export function AutorTable({ data }: { data: IAutor[] }) {
     },
 
     {
-      accessorKey: 'data_nascimento',
+      accessorKey: 'data nascimento',
       header: 'Data Nascimento',
       cell: ({ row }) => (
         <div className="capitalize">{row.getValue('data_nascimento')}</div>
@@ -167,6 +170,12 @@ export function AutorTable({ data }: { data: IAutor[] }) {
   return (
     <>
       <Edit authorId={authorId} isOpen={isEditOpen} setIsOpen={setIsEditOpen} />
+      <AlertDelete
+        authorId={authorId}
+        isOpen={isDeleteOpen}
+        setIsOpen={setIsDeleteOpen}
+        name="'AUTOR'"
+      />
 
       <div className="w-full mt-10">
         <div className="flex items-center py-4">
