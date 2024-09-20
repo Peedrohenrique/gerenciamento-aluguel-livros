@@ -77,7 +77,7 @@ export function AutorTable({ data }: { data: IAutor[] }) {
         )
       },
       cell: ({ row }) => (
-        <div className="lowercase">{row.getValue('nome')}</div>
+        <div className="font-medium">{row.getValue('nome')}</div>
       ),
     },
     {
@@ -89,7 +89,7 @@ export function AutorTable({ data }: { data: IAutor[] }) {
           typeof biografia === 'string' && biografia.length > 57
             ? `${biografia.slice(0, 57)}...`
             : biografia
-        return <div className="font-medium">{biografiaCurta}</div>
+        return <div className="">{biografiaCurta}</div>
       },
     },
 

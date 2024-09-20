@@ -31,16 +31,16 @@ export function Sidebar() {
   }
 
   return (
-    <div className="flex flex-col w-full bg-muted/40">
-      <aside className="fixed inset-y-0 left-0 z-10 hidden w-64 border-r  bg-background sm:flex flex-col">
-        <nav className="grid gap-6 text-lg font-medium">
-          <div className="flex text-muted-foreground border-b  py-3 font-normal text-lg hover:text-foreground ml-1">
+    <div className="flex flex-col w-full">
+      <aside className="fixed inset-y-0 left-0 z-10 hidden border-r border-border bg-secondary/5 sm:flex flex-col">
+        <nav className="grid gap-6 text-sm ">
+          <div className="flex  border-b py-3 font-normal text-sm hover:text-muted-foreground ml-1">
             <Link
               href="#"
-              className="flex h-10 w-10 bg-primary rounded-full text-lg items-center justify-center text-primary-foreground md:text-base"
+              className="flex h-10 w-10 bg-primary rounded-full text-sm	items-center justify-center text-primary-foreground md:text-base"
               prefetch={false}
             >
-              <BookOpen className="w-5 h-5" />
+              <BookOpen className="w-3 h-3" />
               <span className="sr-only">Logo</span>
             </Link>
             <div className="flex">
@@ -52,66 +52,67 @@ export function Sidebar() {
           <Link
             href="dashboard"
             className={cn([
-              isActive('/admin/dashboard') && 'bg-secondary rounded-md',
-              `flex items-center gap-4 px-4 text-muted-foreground font-normal text-base hover:text-foreground`,
+              isActive('/admin/dashboard') && 'bg-secondary',
+              `flex items-center gap-4 px-3 rounded-md text-sm hover:text-muted-foreground`,
             ])}
             prefetch={false}
           >
-            <Home className="w-5 h-5" />
+            <Home className="w-4 h-4" />
             dashboard
           </Link>
           <Link
             href="alugueis"
             className={cn([
-              isActive('/admin/alugueis') && 'bg-secondary rounded-md',
-              `flex items-center gap-4 px-4 text-muted-foreground font-normal text-base hover:text-foreground`,
+              isActive('/admin/alugueis') && 'bg-secondary',
+              `flex items-center gap-4 px-3 rounded-md  text-sm hover:text-muted-foreground`,
             ])}
             prefetch={false}
           >
-            <ShoppingBag className="w-5 h-5" />
+            <ShoppingBag className="w-4 h-4" />
             Aluguéis
           </Link>
 
           <Link
             href="livros"
             className={cn([
-              isActive('/admin/livros') && 'bg-secondary rounded-md',
-              `flex items-center gap-4 px-4 text-muted-foreground font-normal text-base hover:text-foreground`,
+              isActive('/admin/livros') && 'bg-secondary',
+              `flex items-center gap-4 px-3 rounded-md  text-sm hover:text-muted-foreground`,
             ])}
             prefetch={false}
           >
-            <Package className="w-5 h-5" />
+            <Package className="w-4 h-4" />
             Livros
           </Link>
           <Link
             href="clientes"
             className={cn([
-              isActive('/admin/clientes') && 'bg-secondary rounded-md',
-              `flex items-center gap-4 px-4 text-muted-foreground font-normal text-base hover:text-foreground`,
+              isActive('/admin/clientes') && 'bg-secondary',
+              `flex items-center gap-4 px-3  rounded-md  text-sm hover:text-muted-foreground`,
             ])}
             prefetch={false}
           >
-            <Users className="w-5 h-5" />
+            <Users className="w-4 h-4" />
             Clientes
           </Link>
           <Link
             href="autores"
             className={cn([
-              isActive('/admin/autores') && 'bg-secondary rounded-md',
-              `flex items-center gap-4 px-4 text-muted-foreground font-normal text-base hover:text-foreground`,
+              isActive('/admin/autores') && 'bg-secondary',
+              `flex items-center gap-4 px-3 rounded-md  text-sm hover:text-muted-foreground`,
             ])}
             prefetch={false}
           >
-            <Users className="w-5 h-5" />
+            <Users className="w-4 h-4" />
             Autores
           </Link>
         </nav>
-        <nav className="mt-auto flex flex-col items-lert gap-4 px-2 py-5">
+
+        <nav className=" p-6 mt-auto border-t border-border">
           {/* <Link
             href="/"
-            className="flex items-center gap-4 px-4 text-muted-foreground font-normal text-base hover:text-foreground"
+            className="flex items-center gap-4 px-3 rounded-md  text-sm hover:text-muted-foreground"
           >
-            <LogOut className="w-5 h-5" />
+            <LogOut className="w-4 h-4" />
             Sair
           </Link> */}
           <UserDropdown user={user} />
@@ -123,67 +124,67 @@ export function Sidebar() {
           <Sheet>
             <SheetTrigger asChild>
               <Button size="icon" variant="outline" className="sm:hidden">
-                <PanelBottom className="w-5 h-5" />
+                <PanelBottom className="w-4 h-4" />
                 <span className="sr-only">Abrir / fechar menu</span>
               </Button>
             </SheetTrigger>
 
             <SheetContent side="left" className="sm:max-w-x">
-              <nav className="grid gap-6 text-lg font-medium">
-                <div className="flex  text-muted-foreground border-b border-gray-200  py-3 font-normal text-lg hover:text-foreground ">
+              <nav className="grid gap-6 text-sm	 font-medium">
+                <div className="flex  text-muted-foreground border-b border-gray-200  py-3 font-normal text-sm	 hover:text-muted-foreground ">
                   <Link
                     href="#"
-                    className="flex h-10 w-10 bg-primary rounded-full text-lg
+                    className="flex h-10 w-10 bg-primary rounded-full text-sm	
                   items-center justify-center text-primary-foreground md:text-base"
                     prefetch={false}
                   >
-                    <BookOpen className="w-5 h-5" />
+                    <BookOpen className="w-4 h-4" />
                     <span className="sr-only">Logo</span>
                   </Link>
                   <span className="m-auto ml-4">Gerenciamento Livros</span>
                 </div>
                 <Link
                   href="/"
-                  className="flex items-center gap-4 px-2.5 text-muted-foreground font-normal text-base hover:text-foreground"
+                  className="flex items-center gap-4 px-2.5 text-muted-foreground font-normal text-base hover:text-muted-foreground"
                   prefetch={false}
                 >
-                  <Home className="w-5 h-5" />
+                  <Home className="w-4 h-4" />
                   Início
                 </Link>
 
                 <Link
                   href="#"
-                  className="flex items-center gap-4 px-2.5 text-muted-foreground font-normal text-base hover:text-foreground"
+                  className="flex items-center gap-4 px-2.5 text-muted-foreground font-normal text-base hover:text-muted-foreground"
                   prefetch={false}
                 >
-                  <ShoppingBag className="w-5 h-5" />
+                  <ShoppingBag className="w-4 h-4" />
                   Pedidos
                 </Link>
 
                 <Link
                   href="#"
-                  className="flex items-center gap-4 px-2.5 text-muted-foreground font-normal text-base hover:text-foreground"
+                  className="flex items-center gap-4 px-2.5 text-muted-foreground font-normal text-base hover:text-muted-foreground"
                   prefetch={false}
                 >
-                  <Package className="w-5 h-5" />
+                  <Package className="w-4 h-4" />
                   Produtos
                 </Link>
 
                 <Link
                   href="client"
-                  className="flex items-center gap-4 px-2.5 text-muted-foreground font-normal text-base hover:text-foreground"
+                  className="flex items-center gap-4 px-2.5 text-muted-foreground font-normal text-base hover:text-muted-foreground"
                   prefetch={false}
                 >
-                  <Users className="w-5 h-5" />
+                  <Users className="w-4 h-4" />
                   Clientes
                 </Link>
 
                 <Link
                   href="#"
-                  className="flex items-center gap-4 px-2.5 text-muted-foreground font-normal text-base hover:text-foreground"
+                  className="flex items-center gap-4 px-2.5 text-muted-foreground font-normal text-base hover:text-muted-foreground"
                   prefetch={false}
                 >
-                  <LogOut className="w-5 h-5" />
+                  <LogOut className="w-4 h-4" />
                   Sair
                 </Link>
               </nav>
