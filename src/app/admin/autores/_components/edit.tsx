@@ -66,39 +66,61 @@ export function Edit({
     },
   })
 
+  // Função para submeter a atualização
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     setLoading(true)
     try {
       await updateAuthor(Number(authorId), values as IAutor)
-      console.log(values)
       toast({
-        title: 'Atualização realizada! ✅',
+        title: 'Atualização realizada! ✅',
         description: 'Seu autor foi atualizado com sucesso!',
         action: (
           <ToastAction altText="Goto schedule to undo">Fechar</ToastAction>
         ),
       })
 
+      // Recarrega os dados atualizados do autor
+      await fetchAuthor()
+
       setLoading(false)
       setIsOpen(false)
-      form.reset()
     } catch (error) {
       toast({
         variant: 'destructive',
-        title: 'Erro atualização!',
+        title: 'Erro na atualização!',
         description: 'Erro ao atualizar o autor.',
       })
       setLoading(false)
     }
   }
 
+  // Função para buscar os dados do autor
   React.useEffect(() => {
-    fetchAuthor()
+    if (authorId) {
+      fetchAuthor()
+    }
   }, [authorId])
 
   async function fetchAuthor() {
-    const authorProps = await fetchAuthorById(Number(authorId))
-    form.reset(authorProps)
+    setLoading(true)
+    try {
+      const authorProps = await fetchAuthorById(Number(authorId))
+      // Preenche os valores do formulário com os dados obtidos
+      form.reset({
+        nome: authorProps.nome,
+        data_nascimento: authorProps.data_nascimento,
+        nacionalidade: authorProps.nacionalidade,
+        biografia: authorProps.biografia,
+      })
+      setLoading(false)
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Erro ao buscar autor!',
+        description: 'Não foi possível carregar os dados do autor.',
+      })
+      setLoading(false)
+    }
   }
 
   return (
@@ -107,7 +129,7 @@ export function Edit({
         <DialogHeader>
           <DialogTitle>Editar Autor</DialogTitle>
           <DialogDescription>
-            Faça alterações em autor aqui. Clique em salvar quando terminar.
+            Faça alterações no autor aqui. Clique em salvar quando terminar.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -168,7 +190,7 @@ export function Edit({
               )}
             />
             <DialogFooter>
-              <Button type="submit">
+              <Button type="submit" disabled={loading}>
                 {loading ? (
                   <Loader2 className="mr-2 ml-2 h-4 w-4 animate-spin" />
                 ) : (

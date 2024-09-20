@@ -57,7 +57,6 @@ export function AutorTable({ data }: { data: IAutor[] }) {
 
   const handleDelete = async (id: number) => {
     await deleteAuthor(id)
-    console.log('delete', id)
   }
 
   const columns: ColumnDef<IAutor>[] = [
