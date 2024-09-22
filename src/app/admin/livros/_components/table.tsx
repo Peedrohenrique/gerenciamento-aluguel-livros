@@ -169,7 +169,7 @@ export function LivroTable({ data }: { data: ILivro[] }) {
 
   return (
     <>
-      <Edit authorId={authorId} isOpen={isEditOpen} setIsOpen={setIsEditOpen} />
+      <Edit bookId={authorId} isOpen={isEditOpen} setIsOpen={setIsEditOpen} />
       <AlertDelete
         authorId={authorId}
         isOpen={isDeleteOpen}

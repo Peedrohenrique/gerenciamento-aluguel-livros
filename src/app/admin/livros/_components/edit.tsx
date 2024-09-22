@@ -22,47 +22,59 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { IAutor } from '@/interfaces/IAutor'
-import { fetchAuthorById, updateAuthor } from '@/services/autor'
+import { ILivro } from '@/interfaces/ILivro'
+import { fetchBookById, updateBook } from '@/services/livro'
 import { useToast } from '@/hooks/use-toast'
 import { Loader2 } from 'lucide-react'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { IAutor } from '@/interfaces/IAutor'
+import { fetchAllAuthors } from '@/services/autor'
 
 // Esquema de validação do Zod
 const formSchema = z.object({
-  nome: z
+  titulo: z
     .string()
-    .min(2, { message: 'Nome deve ter pelo menos 2 caracteres.' }),
-  data_nascimento: z
+    .min(2, { message: 'Título deve ter pelo menos 2 caracteres.' }),
+
+  descricao: z
     .string()
-    .nonempty({ message: 'Data de nascimento é obrigatória.' }),
-  nacionalidade: z
+    .min(2, { message: 'Descricão deve ter pelo menos 2 caracteres.' }),
+
+  preco_aluguel: z
     .string()
-    .min(2, { message: 'Nacionalidade deve ter pelo menos 2 caracteres.' }),
-  biografia: z
-    .string()
-    .min(10, { message: 'A biografia deve ter pelo menos 10 caracteres.' }),
+    .regex(/^\d+([.,]\d{1,2})?$/, { message: 'Insira um preço válido.' }) // Aceita números decimais ou inteiros
+    .transform((value) => parseFloat(value.replace(',', '.'))) // Substitui a vírgula por ponto e transforma em número
+    .refine((value) => value > 0, { message: 'Preço deve ser positivo.' }), // Verifica se é positivo
+
+  autor_id: z.string().nonempty({ message: 'Autor é obrigatório.' }),
 })
 
 export function Edit({
-  authorId,
+  bookId,
   isOpen,
   setIsOpen,
 }: {
-  authorId: number | null
+  bookId: number | null
   isOpen: boolean
   setIsOpen: (open: boolean) => void
 }) {
   const [loading, setLoading] = React.useState(false)
+  const [authors, setAuthors] = React.useState<IAutor[]>([]) // Estado para armazenar os autores
   const { toast } = useToast()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      nome: '',
-      data_nascimento: '',
-      nacionalidade: '',
-      biografia: '',
+      titulo: '',
+      descricao: '',
+      preco_aluguel: 0,
+      autor_id: '',
     },
   })
 
@@ -70,7 +82,7 @@ export function Edit({
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     setLoading(true)
     try {
-      await updateAuthor(Number(authorId), values as IAutor)
+      await updateBook(Number(bookId), values as ILivro)
       toast({
         title: 'Atualização realizada! ✅',
         description: 'Seu autor foi atualizado com sucesso!',
@@ -79,8 +91,8 @@ export function Edit({
         ),
       })
 
-      // Recarrega os dados atualizados do autor
-      await fetchAuthor()
+      // Recarrega os dados atualizados do livro
+      await fetchLivro()
 
       setLoading(false)
       setIsOpen(false)
@@ -88,37 +100,59 @@ export function Edit({
       toast({
         variant: 'destructive',
         title: 'Erro na atualização!',
-        description: 'Erro ao atualizar o autor.',
+        description: 'Erro ao atualizar o livro.',
       })
       setLoading(false)
     }
   }
 
-  // Função para buscar os dados do autor
+  // Função para buscar os dados do livro
   React.useEffect(() => {
-    if (authorId) {
-      fetchAuthor()
+    if (bookId) {
+      fetchLivro()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authorId])
+  }, [bookId])
 
-  async function fetchAuthor() {
+  async function fetchLivro() {
     setLoading(true)
     try {
-      const authorProps = await fetchAuthorById(Number(authorId))
+      const bookProps = await fetchBookById(Number(bookId))
       // Preenche os valores do formulário com os dados obtidos
       form.reset({
-        nome: authorProps.nome,
-        data_nascimento: authorProps.data_nascimento,
-        nacionalidade: authorProps.nacionalidade,
-        biografia: authorProps.biografia,
+        titulo: bookProps.titulo,
+        descricao: bookProps.descricao,
+        preco_aluguel: bookProps.preco_aluguel,
+        autor_id: bookProps.autor_id,
       })
       setLoading(false)
     } catch (error) {
       toast({
         variant: 'destructive',
-        title: 'Erro ao buscar autor!',
-        description: 'Não foi possível carregar os dados do autor.',
+        title: 'Erro ao buscar livro!',
+        description: 'Não foi possível carregar os dados do livro.',
+      })
+      setLoading(false)
+    }
+  }
+
+  // Função para buscar os dados dos autores
+  React.useEffect(() => {
+    fetchAuthors()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  async function fetchAuthors() {
+    setLoading(true)
+    try {
+      const authorProps = await fetchAllAuthors() // Busca todos os autores
+      setAuthors(authorProps) // Armazena os autores no estado
+      setLoading(false)
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Erro ao buscar autores!',
+        description: 'Não foi possível carregar os dados dos autores.',
       })
       setLoading(false)
     }
@@ -128,9 +162,9 @@ export function Edit({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>Editar Autor</DialogTitle>
+          <DialogTitle>Editar Livro</DialogTitle>
           <DialogDescription>
-            Faça alterações no autor aqui. Clique em salvar quando terminar.
+            Faça alterações no livro aqui. Clique em salvar quando terminar.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -140,12 +174,12 @@ export function Edit({
           >
             <FormField
               control={form.control}
-              name="nome"
+              name="titulo"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nome</FormLabel>
+                  <FormLabel>Título</FormLabel>
                   <FormControl>
-                    <Input placeholder="Nome" {...field} />
+                    <Input placeholder="Título" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -153,12 +187,12 @@ export function Edit({
             />
             <FormField
               control={form.control}
-              name="data_nascimento"
+              name="descricao"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Data de Nascimento</FormLabel>
+                  <FormLabel>Descrição</FormLabel>
                   <FormControl>
-                    <Input type="date" {...field} />
+                    <Input placeholder="Descrição" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -166,12 +200,12 @@ export function Edit({
             />
             <FormField
               control={form.control}
-              name="nacionalidade"
+              name="preco_aluguel"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nacionalidade</FormLabel>
+                  <FormLabel>Preço Aluguel</FormLabel>
                   <FormControl>
-                    <Input placeholder="Nacionalidade" {...field} />
+                    <Input type="text" placeholder="R$:00.00" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -179,12 +213,26 @@ export function Edit({
             />
             <FormField
               control={form.control}
-              name="biografia"
+              name="autor_id"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Biografia</FormLabel>
+                  <FormLabel>Autor</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Biografia" {...field} />
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value} // Garantir que o valor do select seja o valor do campo
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione um autor" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {authors.map((author) => (
+                          <SelectItem key={author.id} value={String(author.id)}>
+                            {author.nome}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
