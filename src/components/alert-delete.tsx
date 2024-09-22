@@ -8,7 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { deleteAuthor } from '@/services/autor'
+import { deleteBook } from '@/services/livro'
 
 export function AlertDelete({
   authorId,
@@ -22,7 +22,7 @@ export function AlertDelete({
   name: string
 }) {
   async function handleDelete() {
-    await deleteAuthor(authorId as number)
+    await deleteBook(authorId as number)
     setIsOpen(false)
   }
 

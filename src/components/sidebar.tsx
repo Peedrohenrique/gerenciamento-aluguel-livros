@@ -73,17 +73,6 @@ export function Sidebar() {
           </Link>
 
           <Link
-            href="livros"
-            className={cn([
-              isActive('/admin/livros') && 'bg-secondary',
-              `flex items-center gap-4 px-3 rounded-md  text-sm hover:text-muted-foreground`,
-            ])}
-            prefetch={false}
-          >
-            <Package className="w-4 h-4" />
-            Livros
-          </Link>
-          <Link
             href="clientes"
             className={cn([
               isActive('/admin/clientes') && 'bg-secondary',
@@ -93,6 +82,17 @@ export function Sidebar() {
           >
             <Users className="w-4 h-4" />
             Clientes
+          </Link>
+          <Link
+            href="livros"
+            className={cn([
+              isActive('/admin/livros') && 'bg-secondary',
+              `flex items-center gap-4 px-3 rounded-md  text-sm hover:text-muted-foreground`,
+            ])}
+            prefetch={false}
+          >
+            <Package className="w-4 h-4" />
+            Livros
           </Link>
           <Link
             href="autores"
@@ -149,29 +149,20 @@ export function Sidebar() {
                   prefetch={false}
                 >
                   <Home className="w-4 h-4" />
-                  Início
+                  dashboard
                 </Link>
 
                 <Link
-                  href="#"
+                  href="/admin/alugueis"
                   className="flex items-center gap-4 px-2.5 text-muted-foreground font-normal text-base hover:text-muted-foreground"
                   prefetch={false}
                 >
                   <ShoppingBag className="w-4 h-4" />
-                  Pedidos
+                  Aluguéis
                 </Link>
 
                 <Link
-                  href="#"
-                  className="flex items-center gap-4 px-2.5 text-muted-foreground font-normal text-base hover:text-muted-foreground"
-                  prefetch={false}
-                >
-                  <Package className="w-4 h-4" />
-                  Produtos
-                </Link>
-
-                <Link
-                  href="client"
+                  href="admin/clientes"
                   className="flex items-center gap-4 px-2.5 text-muted-foreground font-normal text-base hover:text-muted-foreground"
                   prefetch={false}
                 >
@@ -180,7 +171,25 @@ export function Sidebar() {
                 </Link>
 
                 <Link
-                  href="#"
+                  href="/admin/livros"
+                  className="flex items-center gap-4 px-2.5 text-muted-foreground font-normal text-base hover:text-muted-foreground"
+                  prefetch={false}
+                >
+                  <Package className="w-4 h-4" />
+                  Livros
+                </Link>
+
+                <Link
+                  href="/admin/autores"
+                  className="flex items-center gap-4 px-2.5 text-muted-foreground font-normal text-base hover:text-muted-foreground"
+                  prefetch={false}
+                >
+                  <Users className="w-4 h-4" />
+                  Autores
+                </Link>
+
+                <Link
+                  href=""
                   className="flex items-center gap-4 px-2.5 text-muted-foreground font-normal text-base hover:text-muted-foreground"
                   prefetch={false}
                 >

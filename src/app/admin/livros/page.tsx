@@ -1,25 +1,25 @@
-import { AutorTable } from './_components/table'
+import { LivroTable } from './_components/table'
 import { Create } from './_components/create'
-import { fetchAllAuthors } from '@/services/autor'
+import { fetchAllBooks } from '@/services/livro'
 
-async function Autores() {
-  const data = await fetchAllAuthors()
+async function Livros() {
+  const data = await fetchAllBooks()
 
   return (
     <div className="">
       <div className="flex items-center justify-between lg:justify-between">
         <div className="flex flex-col gap-3">
-          <h1 className="text-5xl ">Autores</h1>
+          <h1 className="text-5xl ">Livros</h1>
           <p className="text-sm text-gray-500 ">
-            Todas as informações sobre os autores
+            Todas as informações sobre os livros
           </p>
         </div>
         <Create />
       </div>
 
-      <AutorTable data={data} />
+      <LivroTable data={data} />
     </div>
   )
 }
 
-export default Autores
+export default Livros
