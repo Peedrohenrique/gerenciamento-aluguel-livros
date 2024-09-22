@@ -105,7 +105,6 @@ export function Create() {
     setLoading(true)
     try {
       await createBook(values)
-      console.log(values)
       toast({
         title: 'Cadastro realizado! ✅',
         description: 'Seu livro foi cadastrado com sucesso!',
