@@ -73,17 +73,6 @@ export function Sidebar() {
           </Link>
 
           <Link
-            href="clientes"
-            className={cn([
-              isActive('/admin/clientes') && 'bg-secondary',
-              `flex items-center gap-4 px-3  rounded-md  text-sm hover:text-muted-foreground`,
-            ])}
-            prefetch={false}
-          >
-            <Users className="w-4 h-4" />
-            Clientes
-          </Link>
-          <Link
             href="livros"
             className={cn([
               isActive('/admin/livros') && 'bg-secondary',
@@ -104,6 +93,17 @@ export function Sidebar() {
           >
             <Users className="w-4 h-4" />
             Autores
+          </Link>
+          <Link
+            href="clientes"
+            className={cn([
+              isActive('/admin/clientes') && 'bg-secondary',
+              `flex items-center gap-4 px-3  rounded-md  text-sm hover:text-muted-foreground`,
+            ])}
+            prefetch={false}
+          >
+            <Users className="w-4 h-4" />
+            Clientes
           </Link>
         </nav>
 

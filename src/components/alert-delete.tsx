@@ -11,18 +11,18 @@ import {
 import { deleteBook } from '@/services/livro'
 
 export function AlertDelete({
-  authorId,
+  id,
   isOpen,
   setIsOpen,
   name,
 }: {
-  authorId: number | null
+  id: number | null
   isOpen: boolean
   setIsOpen: (open: boolean) => void
   name: string
 }) {
   async function handleDelete() {
-    await deleteBook(authorId as number)
+    await deleteBook(id as number)
     setIsOpen(false)
   }
 

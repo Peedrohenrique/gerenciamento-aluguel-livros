@@ -1,9 +1,9 @@
 import { ClienteTable } from './_components/table'
 import { Create } from './_components/create'
-// import { fetchAllAuthors } from '@/services/autor'
+import { fetchAllClients } from '@/services/cliente'
 
 async function Clientes() {
-  // const autors = await fetchAllAuthors()
+  const client = await fetchAllClients()
 
   return (
     <div className="">
@@ -11,13 +11,13 @@ async function Clientes() {
         <div className="flex flex-col gap-3">
           <h1 className="text-5xl ">Clientes</h1>
           <p className="text-sm text-gray-500 ">
-            Todas as informações sobre os clientes de livros
+            Todas as informações sobre os clientes
           </p>
         </div>
         <Create />
       </div>
 
-      <ClienteTable />
+      <ClienteTable data={client} />
     </div>
   )
 }

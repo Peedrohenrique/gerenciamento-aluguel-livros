@@ -171,7 +171,7 @@ export function AutorTable({ data }: { data: IAutor[] }) {
     <>
       <Edit authorId={authorId} isOpen={isEditOpen} setIsOpen={setIsEditOpen} />
       <AlertDelete
-        authorId={authorId}
+        id={authorId}
         isOpen={isDeleteOpen}
         setIsOpen={setIsDeleteOpen}
         name="'AUTOR'"
