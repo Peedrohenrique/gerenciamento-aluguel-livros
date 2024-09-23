@@ -56,11 +56,11 @@ const formSchema = z.object({
 })
 
 export function Edit({
-  bookId,
+  id,
   isOpen,
   setIsOpen,
 }: {
-  bookId: number | null
+  id: number | null
   isOpen: boolean
   setIsOpen: (open: boolean) => void
 }) {
@@ -82,7 +82,7 @@ export function Edit({
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     setLoading(true)
     try {
-      await updateBook(Number(bookId), values as ILivro)
+      await updateBook(Number(id), values as ILivro)
       toast({
         title: 'Atualização realizada! ✅',
         description: 'Seu autor foi atualizado com sucesso!',
@@ -108,16 +108,16 @@ export function Edit({
 
   // Função para buscar os dados do livro
   React.useEffect(() => {
-    if (bookId) {
+    if (id) {
       fetchLivro()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bookId])
+  }, [id])
 
   async function fetchLivro() {
     setLoading(true)
     try {
-      const bookProps = await fetchBookById(Number(bookId))
+      const bookProps = await fetchBookById(Number(id))
       // Preenche os valores do formulário com os dados obtidos
       form.reset({
         titulo: bookProps.titulo,

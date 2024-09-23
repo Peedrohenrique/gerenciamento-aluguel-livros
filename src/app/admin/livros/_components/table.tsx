@@ -81,6 +81,15 @@ export function LivroTable({ data }: { data: ILivro[] }) {
       ),
     },
     {
+      accessorKey: 'autor',
+      header: 'Autor',
+      cell: ({ row }) => {
+        const autorNome = row.original.autor?.nome || 'Autor desconhecido'
+        return <div className="capitalize">{autorNome}</div>
+      },
+    },
+
+    {
       accessorKey: 'descricao',
       header: () => <div className="">Descricão</div>,
       cell: ({ row }) => {
@@ -169,9 +178,9 @@ export function LivroTable({ data }: { data: ILivro[] }) {
 
   return (
     <>
-      <Edit bookId={authorId} isOpen={isEditOpen} setIsOpen={setIsEditOpen} />
+      <Edit id={authorId} isOpen={isEditOpen} setIsOpen={setIsEditOpen} />
       <AlertDelete
-        authorId={authorId}
+        id={authorId}
         isOpen={isDeleteOpen}
         setIsOpen={setIsDeleteOpen}
         name="'LIVRO'"

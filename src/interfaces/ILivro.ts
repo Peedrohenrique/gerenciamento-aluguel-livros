@@ -4,4 +4,7 @@ export interface ILivro {
   descricao: string
   preco_aluguel: number
   autor_id: string
+  autor: {
+    nome: string
+  }
 }

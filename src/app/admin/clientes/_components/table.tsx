@@ -45,6 +45,7 @@ export function ClienteTable({ data }: { data: ICliente[] }) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
   )
+
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
 
