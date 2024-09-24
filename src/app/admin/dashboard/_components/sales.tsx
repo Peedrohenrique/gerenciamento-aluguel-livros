@@ -5,9 +5,10 @@ import {
   CardDescription,
   CardContent,
 } from '@/components/ui/card'
+import { IDashboard } from '@/interfaces/IDashboard'
 import { DollarSign, Users, BookOpen, CircleUserRound } from 'lucide-react'
 
-export function Sales() {
+export function Sales({ data }: { data: IDashboard }) {
   return (
     <section className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       <Card>
@@ -18,8 +19,18 @@ export function Sales() {
           </div>
           <CardDescription>Total aluguéis em 30 dias</CardDescription>
         </CardHeader>
+
         <CardContent>
-          <p className="text-base sm:text-lg font-bold">R$ 40.000</p>
+          <div className="text-2xl font-bold">
+            R$
+            {parseFloat(data.total_valor_aluguel as string).toLocaleString(
+              'pt-BR',
+              {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              },
+            )}
+          </div>
         </CardContent>
       </Card>
 
@@ -32,7 +43,7 @@ export function Sales() {
           <CardDescription>Total de todos os clientes</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-base sm:text-lg font-bold">249</p>
+          <p className="text-base sm:text-lg font-bold">{`${data.total_clientes}`}</p>
         </CardContent>
       </Card>
 
@@ -45,7 +56,7 @@ export function Sales() {
           <CardDescription>Total de todos os livro</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-base sm:text-lg font-bold">79</p>
+          <p className="text-base sm:text-lg font-bold">{`${data.total_livros}`}</p>
         </CardContent>
       </Card>
 
@@ -58,7 +69,7 @@ export function Sales() {
           <CardDescription>Total de todos os autores</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-base sm:text-lg font-bold">2500</p>
+          <p className="text-base sm:text-lg font-bold">{`${data.total_autores}`}</p>
         </CardContent>
       </Card>
     </section>
