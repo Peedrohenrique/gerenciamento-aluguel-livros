@@ -35,11 +35,11 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Edit } from './edit'
-import { ILivro } from '@/interfaces/ILivro'
+import { IAluguel } from '@/interfaces/IAluguel'
 
 import { AlertDelete } from '@/components/alert-delete'
 
-export function LivroTable({ data }: { data: ILivro[] }) {
+export function AluguelTable({ data }: { data: IAluguel[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -48,9 +48,9 @@ export function LivroTable({ data }: { data: ILivro[] }) {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
 
-  const [authorId, setAuthorId] = React.useState<number | null>(null) // Estado para armazenar o ID do autor
-  const [isEditOpen, setIsEditOpen] = React.useState(false) // Estado para controlar a exibição do modal
-  const [isDeleteOpen, setIsDeleteOpen] = React.useState(false) // Estado para controlar a exibição do modal
+  const [authorId, setAuthorId] = React.useState<number | null>(null)
+  const [isEditOpen, setIsEditOpen] = React.useState(false)
+  const [isDeleteOpen, setIsDeleteOpen] = React.useState(false)
 
   const handleEdit = (id: number) => {
     setAuthorId(id)
@@ -62,59 +62,80 @@ export function LivroTable({ data }: { data: ILivro[] }) {
     setIsDeleteOpen(true)
   }
 
-  const columns: ColumnDef<ILivro>[] = [
+  const columns: ColumnDef<IAluguel>[] = [
     {
-      accessorKey: 'titulo',
+      accessorKey: 'status',
+      header: 'Status',
+      cell: ({ row }) => {
+        const status = row.getValue('status') === 0 ? 'Inativo' : 'Ativo'
+        return <div className="font-medium">{status}</div>
+      },
+    },
+    {
+      accessorKey: 'data_aluguel',
+      header: 'Data aluguel',
+
+      cell: ({ row }) => {
+        const dataAluguel = new Date(
+          row.getValue('data_aluguel'),
+        ).toLocaleDateString('pt-BR', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+        })
+        return <div className="">{dataAluguel}</div>
+      },
+    },
+    {
+      accessorKey: 'data_devolucao',
+      header: 'Data devolução',
+      cell: ({ row }) => {
+        const dataDevolucao = new Date(
+          row.getValue('data_devolucao'),
+        ).toLocaleDateString('pt-BR', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+        })
+        return <div className="">{dataDevolucao}</div>
+      },
+    },
+    {
+      accessorKey: 'cliente',
       header: ({ column }) => {
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
-            Título
+            Cliente
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         )
       },
-      cell: ({ row }) => (
-        <div className="font-medium">{row.getValue('titulo')}</div>
-      ),
-    },
-    {
-      accessorKey: 'autor',
-      header: 'Autor',
       cell: ({ row }) => {
-        const autorNome = row.original.autor?.nome || 'Autor desconhecido'
-        return <div className="capitalize">{autorNome}</div>
+        const clienteNome = row.original.cliente?.nome || 'Cliente desconhecido'
+        return <div className="font-medium">{clienteNome}</div>
+      },
+      // Adicionando filtro customizado
+      filterFn: (row, columnId, filterValue) => {
+        const clienteNome = row.original.cliente?.nome || ''
+        return clienteNome.toLowerCase().includes(filterValue.toLowerCase())
       },
     },
 
     {
-      accessorKey: 'descricao',
-      header: () => <div className="">Descricão</div>,
+      accessorKey: 'livro',
+      header: 'Livro',
       cell: ({ row }) => {
-        const descricao = row.getValue('descricao') as string
-        const descricaoCurta =
-          typeof descricao === 'string' && descricao.length > 57
-            ? `${descricao.slice(0, 57)}...`
-            : descricao
-        return <div className="">{descricaoCurta}</div>
+        const livroNome = row.original.livro?.titulo || 'Livro desconhecido'
+        return <div className="capitalize">{livroNome}</div>
       },
     },
-
     {
-      accessorKey: 'preco_aluguel',
-      header: 'Preço Aluguel',
-      cell: ({ row }) => (
-        <div className="capitalize">
-          {'R$ ' +
-            (row.getValue('preco_aluguel')
-              ? Number(row.getValue('preco_aluguel'))
-                  .toFixed(2)
-                  .replace('.', ',')
-              : '0,00')}
-        </div>
-      ),
+      accessorKey: 'observacao',
+      header: 'Observação',
+      cell: ({ row }) => <div className="">{row.getValue('observacao')}</div>,
     },
     {
       id: 'actions',
@@ -183,18 +204,18 @@ export function LivroTable({ data }: { data: ILivro[] }) {
         id={authorId}
         isOpen={isDeleteOpen}
         setIsOpen={setIsDeleteOpen}
-        name="'LIVRO'"
+        name="'ALUGUEL'"
       />
 
       <div className="w-full mt-10">
         <div className="flex items-center py-4">
           <Input
-            placeholder="Pesquisar por titulo..."
+            placeholder="Pesquisar por cliente..."
             value={
-              (table.getColumn('titulo')?.getFilterValue() as string) ?? ''
+              (table.getColumn('cliente')?.getFilterValue() as string) ?? ''
             }
             onChange={(event) =>
-              table.getColumn('titulo')?.setFilterValue(event.target.value)
+              table.getColumn('cliente')?.setFilterValue(event.target.value)
             }
             className="max-w-sm"
           />
