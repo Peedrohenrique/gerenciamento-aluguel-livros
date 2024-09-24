@@ -1,11 +1,12 @@
 'use server'
 import { IAutor } from '@/interfaces/IAutor'
+import { API_BASE_URL } from '@/lib/api'
 import { revalidatePath } from 'next/cache'
 
 // Função para buscar todos os autores
 export const fetchAllAuthors = async (): Promise<IAutor[]> => {
   try {
-    const response = await fetch('http://localhost:3000/autores')
+    const response = await fetch(`${API_BASE_URL}/autores`)
     if (!response.ok) {
       const errorMessage = await response.text()
       throw new Error(`Erro ao buscar autores: ${errorMessage}`)
@@ -21,7 +22,7 @@ export const fetchAllAuthors = async (): Promise<IAutor[]> => {
 // Função para buscar um autor por ID
 export const fetchAuthorById = async (id: number): Promise<IAutor> => {
   try {
-    const response = await fetch(`http://localhost:3000/autores/${id}`)
+    const response = await fetch(`${API_BASE_URL}/autores/${id}`)
     if (!response.ok) {
       const errorMessage = await response.text()
       throw new Error(`Erro ao buscar autor: ${errorMessage}`)
@@ -37,7 +38,7 @@ export const fetchAuthorById = async (id: number): Promise<IAutor> => {
 // Função para adicionar um novo autor
 export const createAuthor = async (author: IAutor): Promise<IAutor> => {
   try {
-    const response = await fetch('http://localhost:3000/autores', {
+    const response = await fetch(`${API_BASE_URL}/autores`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -63,7 +64,7 @@ export const updateAuthor = async (
   author: IAutor,
 ): Promise<IAutor> => {
   try {
-    const response = await fetch(`http://localhost:3000/autores/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/autores/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -86,7 +87,7 @@ export const updateAuthor = async (
 // Função para excluir um autor por ID
 export const deleteAuthor = async (id: number): Promise<void> => {
   try {
-    const response = await fetch(`http://localhost:3000/autores/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/autores/${id}`, {
       method: 'DELETE',
     })
 

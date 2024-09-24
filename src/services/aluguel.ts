@@ -1,11 +1,12 @@
 'use server'
 import { IAluguel } from '@/interfaces/IAluguel'
+import { API_BASE_URL } from '@/lib/api'
 import { revalidatePath } from 'next/cache'
 
 // Função para buscar todos os alugueis
 export const fetchAllRent = async (): Promise<IAluguel[]> => {
   try {
-    const response = await fetch('http://localhost:3000/alugueis')
+    const response = await fetch(`${API_BASE_URL}/alugueis`)
     if (!response.ok) {
       const errorMessage = await response.text()
       throw new Error(`Erro ao buscar alugueis: ${errorMessage}`)
@@ -21,7 +22,7 @@ export const fetchAllRent = async (): Promise<IAluguel[]> => {
 // Função para buscar um aluguel por ID
 export const fetchRentById = async (id: number): Promise<IAluguel> => {
   try {
-    const response = await fetch(`http://localhost:3000/alugueis/${id}`)
+    const response = await fetch(`${API_BASE_URL}/alugueis/${id}`)
     if (!response.ok) {
       const errorMessage = await response.text()
       throw new Error(`Erro ao buscar aluguel: ${errorMessage}`)
@@ -37,7 +38,7 @@ export const fetchRentById = async (id: number): Promise<IAluguel> => {
 // Função para adicionar um novo aluguel
 export const createRent = async (rent: IAluguel): Promise<IAluguel> => {
   try {
-    const response = await fetch('http://localhost:3000/alugueis', {
+    const response = await fetch(`${API_BASE_URL}/alugueis`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -63,7 +64,7 @@ export const updateRent = async (
   rent: IAluguel,
 ): Promise<IAluguel> => {
   try {
-    const response = await fetch(`http://localhost:3000/alugueis/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/alugueis/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -86,7 +87,7 @@ export const updateRent = async (
 // Função para excluir um rent por ID
 export const deleteRent = async (id: number): Promise<void> => {
   try {
-    const response = await fetch(`http://localhost:3000/alugueis/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/alugueis/${id}`, {
       method: 'DELETE',
     })
 

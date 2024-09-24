@@ -1,11 +1,12 @@
 'use server'
 import { ICliente } from '@/interfaces/ICliente'
+import { API_BASE_URL } from '@/lib/api'
 import { revalidatePath } from 'next/cache'
 
 // Função para buscar todos os clientes
 export const fetchAllClients = async (): Promise<ICliente[]> => {
   try {
-    const response = await fetch('http://localhost:3000/clientes')
+    const response = await fetch(`${API_BASE_URL}/clientes`)
     if (!response.ok) {
       const errorMessage = await response.text()
       throw new Error(`Erro ao buscar clientes: ${errorMessage}`)
@@ -21,7 +22,7 @@ export const fetchAllClients = async (): Promise<ICliente[]> => {
 // Função para buscar um cleinte por ID
 export const fetchclientById = async (id: number): Promise<ICliente> => {
   try {
-    const response = await fetch(`http://localhost:3000/clientes/${id}`)
+    const response = await fetch(`${API_BASE_URL}/clientes/${id}`)
     if (!response.ok) {
       const errorMessage = await response.text()
       throw new Error(`Erro ao buscar cliente: ${errorMessage}`)
@@ -37,7 +38,7 @@ export const fetchclientById = async (id: number): Promise<ICliente> => {
 // Função para adicionar um novo cleinte
 export const createClient = async (client: ICliente): Promise<ICliente> => {
   try {
-    const response = await fetch('http://localhost:3000/clientes', {
+    const response = await fetch(`${API_BASE_URL}/clientes`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -63,7 +64,7 @@ export const updateClient = async (
   client: ICliente,
 ): Promise<ICliente> => {
   try {
-    const response = await fetch(`http://localhost:3000/clientes/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/clientes/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -86,7 +87,7 @@ export const updateClient = async (
 // Função para excluir um cliente por ID
 export const deleteClient = async (id: number): Promise<void> => {
   try {
-    const response = await fetch(`http://localhost:3000/clientes/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/clientes/${id}`, {
       method: 'DELETE',
     })
 

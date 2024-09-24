@@ -1,11 +1,12 @@
 'use server'
 import { ILivro } from '@/interfaces/ILivro'
+import { API_BASE_URL } from '@/lib/api'
 import { revalidatePath } from 'next/cache'
 
 // Função para buscar todos os livros
 export const fetchAllBooks = async (): Promise<ILivro[]> => {
   try {
-    const response = await fetch('http://localhost:3000/livros')
+    const response = await fetch(`${API_BASE_URL}/livros`)
     if (!response.ok) {
       const errorMessage = await response.text()
       throw new Error(`Erro ao buscar livros: ${errorMessage}`)
@@ -21,7 +22,7 @@ export const fetchAllBooks = async (): Promise<ILivro[]> => {
 // Função para buscar um autor por ID
 export const fetchBookById = async (id: number): Promise<ILivro> => {
   try {
-    const response = await fetch(`http://localhost:3000/livros/${id}`)
+    const response = await fetch(`${API_BASE_URL}/livros/${id}`)
     if (!response.ok) {
       const errorMessage = await response.text()
       throw new Error(`Erro ao buscar livro: ${errorMessage}`)
@@ -37,7 +38,7 @@ export const fetchBookById = async (id: number): Promise<ILivro> => {
 // Função para adicionar um novo autor
 export const createBook = async (book: ILivro): Promise<ILivro> => {
   try {
-    const response = await fetch('http://localhost:3000/livros', {
+    const response = await fetch(`${API_BASE_URL}/livros`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -60,7 +61,7 @@ export const createBook = async (book: ILivro): Promise<ILivro> => {
 // Função para atualizar um autor existente
 export const updateBook = async (id: number, book: ILivro): Promise<ILivro> => {
   try {
-    const response = await fetch(`http://localhost:3000/livros/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/livros/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -83,7 +84,7 @@ export const updateBook = async (id: number, book: ILivro): Promise<ILivro> => {
 // Função para excluir um autor por ID
 export const deleteBook = async (id: number): Promise<void> => {
   try {
-    const response = await fetch(`http://localhost:3000/livros/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/livros/${id}`, {
       method: 'DELETE',
     })
 
@@ -91,6 +92,7 @@ export const deleteBook = async (id: number): Promise<void> => {
       const errorMessage = await response.text()
       throw new Error(`Erro ao excluir book: ${errorMessage}`)
     }
+
     revalidatePath('/admin/livros')
   } catch (error) {
     console.error('Erro ao excluir book:', error)

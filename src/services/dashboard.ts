@@ -1,11 +1,12 @@
 'use server'
 
+import { API_BASE_URL } from '@/lib/api'
 import { IDashboard } from '../interfaces/IDashboard'
 
 // Função para buscar todos os dashboard
 export const fetchAllDashboard = async (): Promise<IDashboard> => {
   try {
-    const response = await fetch('http://localhost:3000/dashboard')
+    const response = await fetch(`${API_BASE_URL}/dashboard`)
     if (!response.ok) {
       const errorMessage = await response.text()
       throw new Error(`Erro ao buscar dashboard: ${errorMessage}`)
