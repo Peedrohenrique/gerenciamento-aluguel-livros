@@ -27,15 +27,14 @@ import { IAutor } from '@/interfaces/IAutor'
 import { fetchAuthorById, updateAuthor } from '@/services/autor'
 import { useToast } from '@/hooks/use-toast'
 import { Loader2 } from 'lucide-react'
+import { DatePicker } from '@/components/ui/date-picker'
 
 // Esquema de validação do Zod
 const formSchema = z.object({
   nome: z
     .string()
     .min(2, { message: 'Nome deve ter pelo menos 2 caracteres.' }),
-  data_nascimento: z
-    .string()
-    .nonempty({ message: 'Data de nascimento é obrigatória.' }),
+  data_nascimento: z.date({ message: 'Data de nascimento é obrigatória.' }),
   nacionalidade: z
     .string()
     .min(2, { message: 'Nacionalidade deve ter pelo menos 2 caracteres.' }),
@@ -60,7 +59,7 @@ export function Edit({
     resolver: zodResolver(formSchema),
     defaultValues: {
       nome: '',
-      data_nascimento: '',
+      data_nascimento: new Date(),
       nacionalidade: '',
       biografia: '',
     },
@@ -85,6 +84,7 @@ export function Edit({
       setLoading(false)
       setIsOpen(false)
     } catch (error) {
+      console.log(error)
       toast({
         variant: 'destructive',
         title: 'Erro na atualização!',
@@ -107,6 +107,7 @@ export function Edit({
     try {
       const authorProps = await fetchAuthorById(Number(authorId))
       // Preenche os valores do formulário com os dados obtidos
+
       form.reset({
         nome: authorProps.nome,
         data_nascimento: authorProps.data_nascimento,
@@ -115,6 +116,7 @@ export function Edit({
       })
       setLoading(false)
     } catch (error) {
+      console.log(error)
       toast({
         variant: 'destructive',
         title: 'Erro ao buscar autor!',
@@ -158,7 +160,7 @@ export function Edit({
                 <FormItem>
                   <FormLabel>Data de Nascimento</FormLabel>
                   <FormControl>
-                    <Input type="date" {...field} />
+                    <DatePicker value={field.value} onChange={field.onChange} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

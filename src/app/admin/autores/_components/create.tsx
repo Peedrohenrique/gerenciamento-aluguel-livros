@@ -28,15 +28,14 @@ import { IAutor } from '@/interfaces/IAutor'
 import { createAuthor } from '@/services/autor'
 import { useToast } from '@/hooks/use-toast'
 import { Loader2 } from 'lucide-react'
+import { DatePicker } from '@/components/ui/date-picker'
 
 // Esquema de validação do Zod
 const formSchema = z.object({
   nome: z
     .string()
     .min(2, { message: 'Nome deve ter pelo menos 2 caracteres.' }),
-  data_nascimento: z
-    .string()
-    .nonempty({ message: 'Data de nascimento é obrigatória.' }),
+  data_nascimento: z.date({ message: 'Data de nascimento é obrigatória.' }),
   nacionalidade: z
     .string()
     .min(2, { message: 'Nacionalidade deve ter pelo menos 2 caracteres.' }),
@@ -54,7 +53,7 @@ export function Create() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       nome: '',
-      data_nascimento: '',
+      data_nascimento: new Date(),
       nacionalidade: '',
       biografia: '',
     },
@@ -76,6 +75,7 @@ export function Create() {
       setIsOpen(false)
       form.reset()
     } catch (error) {
+      console.log(error)
       toast({
         variant: 'destructive',
         title: 'Erro cadastro!',
@@ -122,7 +122,7 @@ export function Create() {
                 <FormItem>
                   <FormLabel>Data de Nascimento</FormLabel>
                   <FormControl>
-                    <Input type="date" {...field} />
+                    <DatePicker value={field.value} onChange={field.onChange} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
