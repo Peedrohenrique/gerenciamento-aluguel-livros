@@ -34,7 +34,13 @@ const formSchema = z.object({
   nome: z
     .string()
     .min(2, { message: 'Nome deve ter pelo menos 2 caracteres.' }),
-  data_nascimento: z.date({ message: 'Data de nascimento é obrigatória.' }),
+  data_nascimento: z.preprocess(
+    (value) =>
+      typeof value === 'string' || value instanceof Date
+        ? new Date(value)
+        : value,
+    z.date({ message: 'Data de nascimento é obrigatória.' }),
+  ),
   nacionalidade: z
     .string()
     .min(2, { message: 'Nacionalidade deve ter pelo menos 2 caracteres.' }),

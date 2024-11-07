@@ -38,6 +38,7 @@ import { Edit } from './edit'
 import { ILivro } from '@/interfaces/ILivro'
 
 import { AlertDelete } from '@/components/alert-delete'
+import { deleteBook } from '@/services/livro'
 
 export function LivroTable({ data }: { data: ILivro[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -184,6 +185,7 @@ export function LivroTable({ data }: { data: ILivro[] }) {
         isOpen={isDeleteOpen}
         setIsOpen={setIsDeleteOpen}
         name="'LIVRO'"
+        onDelete={deleteBook}
       />
 
       <div className="w-full mt-10">

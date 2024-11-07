@@ -21,7 +21,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
 import { ILivro } from '@/interfaces/ILivro'
 import { useToast } from '@/hooks/use-toast'
 import { Loader2 } from 'lucide-react'
@@ -38,11 +37,12 @@ import { ICliente } from '@/interfaces/ICliente'
 import { fetchAllClients } from '@/services/cliente'
 import { fetchAllBooks } from '@/services/livro'
 import { IAluguel } from '@/interfaces/IAluguel'
+import { DatePicker } from '@/components/ui/date-picker'
 
 // Esquema de validação do Zod
 const formSchema = z.object({
-  data_aluguel: z.string().nonempty('Data de aluguel é obrigatória.'),
-  data_devolucao: z.string().nonempty('Data de devolução é obrigatória.'),
+  data_aluguel: z.date({ message: 'Data de nascimento é obrigatória.' }),
+  data_devolucao: z.date({ message: 'Data de nascimento é obrigatória.' }),
   cliente_id: z.string().nonempty('Cliente é obrigatório.'),
   livro_id: z.string().nonempty('Livro é obrigatório.'),
   observacao: z.string().optional(),
@@ -66,8 +66,8 @@ export function Edit({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      data_aluguel: '',
-      data_devolucao: '',
+      data_aluguel: new Date(),
+      data_devolucao: new Date(),
       cliente_id: '',
       livro_id: '',
       observacao: '',
@@ -80,13 +80,8 @@ export function Edit({
     setLoading(true)
     try {
       // Convertendo strings de data para objetos Date
-      const formattedValues = {
-        ...values,
-        data_aluguel: new Date(values.data_aluguel),
-        data_devolucao: new Date(values.data_devolucao),
-      }
 
-      await updateRent(Number(id), formattedValues as IAluguel)
+      await updateRent(Number(id), values as IAluguel)
 
       toast({
         title: 'Atualização realizada! ✅',
@@ -101,6 +96,7 @@ export function Edit({
 
       setIsOpen(false)
     } catch (error) {
+      console.error(error)
       toast({
         variant: 'destructive',
         title: 'Erro na atualização!',
@@ -124,8 +120,8 @@ export function Edit({
 
     // Preenche os valores do formulário com os dados obtidos
     form.reset({
-      data_aluguel: String(aluguelProps.data_aluguel),
-      data_devolucao: String(aluguelProps.data_devolucao),
+      data_aluguel: aluguelProps.data_aluguel,
+      data_devolucao: aluguelProps.data_devolucao,
       cliente_id: aluguelProps.cliente_id,
       livro_id: aluguelProps.livro_id,
       observacao: aluguelProps.observacao,
@@ -168,7 +164,7 @@ export function Edit({
                 <FormItem>
                   <FormLabel>Data Aluguel</FormLabel>
                   <FormControl>
-                    <Input type="date" {...field} />
+                    <DatePicker value={field.value} onChange={field.onChange} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -181,7 +177,7 @@ export function Edit({
                 <FormItem>
                   <FormLabel>Data Devolução</FormLabel>
                   <FormControl>
-                    <Input type="date" {...field} />
+                    <DatePicker value={field.value} onChange={field.onChange} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

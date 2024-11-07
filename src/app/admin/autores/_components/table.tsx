@@ -38,6 +38,7 @@ import { Edit } from './edit'
 import { IAutor } from '@/interfaces/IAutor'
 
 import { AlertDelete } from '@/components/alert-delete'
+import { deleteAuthor } from '@/services/autor'
 
 export function AutorTable({ data }: { data: IAutor[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -175,6 +176,7 @@ export function AutorTable({ data }: { data: IAutor[] }) {
         isOpen={isDeleteOpen}
         setIsOpen={setIsDeleteOpen}
         name="'AUTOR'"
+        onDelete={deleteAuthor}
       />
 
       <div className="w-full mt-10">

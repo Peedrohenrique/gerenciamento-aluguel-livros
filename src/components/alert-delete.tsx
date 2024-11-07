@@ -8,22 +8,25 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { deleteBook } from '@/services/livro'
 
 export function AlertDelete({
   id,
   isOpen,
   setIsOpen,
   name,
+  onDelete,
 }: {
   id: number | null
   isOpen: boolean
   setIsOpen: (open: boolean) => void
   name: string
+  onDelete: (id: number) => Promise<void>
 }) {
   async function handleDelete() {
-    await deleteBook(id as number)
-    setIsOpen(false)
+    if (id !== null) {
+      await onDelete(id)
+      setIsOpen(false)
+    }
   }
 
   return (

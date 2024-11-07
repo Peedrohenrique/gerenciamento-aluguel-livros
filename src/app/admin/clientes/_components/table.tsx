@@ -38,6 +38,7 @@ import { Edit } from './edit'
 import { ICliente } from '@/interfaces/ICliente'
 
 import { AlertDelete } from '@/components/alert-delete'
+import { deleteClient } from '@/services/cliente'
 
 export function ClienteTable({ data }: { data: ICliente[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -163,6 +164,7 @@ export function ClienteTable({ data }: { data: ICliente[] }) {
         isOpen={isDeleteOpen}
         setIsOpen={setIsDeleteOpen}
         name="'CLIENTE'"
+        onDelete={deleteClient}
       />
 
       <div className="w-full mt-10">

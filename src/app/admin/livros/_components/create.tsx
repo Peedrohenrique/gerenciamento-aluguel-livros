@@ -92,6 +92,7 @@ export function Create() {
 
       setLoading(false)
     } catch (error) {
+      console.log(error)
       toast({
         variant: 'destructive',
         title: 'Erro ao buscar autor!',
@@ -117,6 +118,7 @@ export function Create() {
       setIsOpen(false)
       form.reset()
     } catch (error) {
+      console.error(error)
       toast({
         variant: 'destructive',
         title: 'Erro cadastro!',

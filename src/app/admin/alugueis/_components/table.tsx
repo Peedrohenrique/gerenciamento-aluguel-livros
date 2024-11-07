@@ -14,7 +14,6 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from 'lucide-react'
-
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -38,6 +37,7 @@ import { Edit } from './edit'
 import { IAluguel } from '@/interfaces/IAluguel'
 
 import { AlertDelete } from '@/components/alert-delete'
+import { deleteRent } from '@/services/aluguel'
 
 export function AluguelTable({ data }: { data: IAluguel[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -205,6 +205,7 @@ export function AluguelTable({ data }: { data: IAluguel[] }) {
         isOpen={isDeleteOpen}
         setIsOpen={setIsDeleteOpen}
         name="'ALUGUEL'"
+        onDelete={deleteRent}
       />
 
       <div className="w-full mt-10">

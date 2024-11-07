@@ -22,7 +22,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
 import {
   Select,
   SelectContent,
@@ -38,13 +37,13 @@ import { ICliente } from '@/interfaces/ICliente'
 import { fetchAllClients } from '@/services/cliente'
 import { ILivro } from '@/interfaces/ILivro'
 import { fetchAllBooks } from '@/services/livro'
+import { DatePicker } from '@/components/ui/date-picker'
+import { IAluguel } from '@/interfaces/IAluguel'
 
 // Esquema de validação do Zod
 const formSchema = z.object({
-  data_aluguel: z.string({ required_error: 'Data de aluguel é obrigatória.' }),
-  data_devolucao: z.string({
-    required_error: 'Data de devolução é obrigatória.',
-  }),
+  data_aluguel: z.date({ message: 'Data de nascimento é obrigatória.' }),
+  data_devolucao: z.date({ message: 'Data de nascimento é obrigatória.' }),
   cliente_id: z.string({ message: 'Cliente é obrigatório.' }),
   livro_id: z.string({ message: 'Livro é obrigatório.' }),
   observacao: z.string().optional(),
@@ -61,8 +60,8 @@ export function Create() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      data_aluguel: '',
-      data_devolucao: '',
+      data_aluguel: new Date(),
+      data_devolucao: new Date(),
       cliente_id: '',
       livro_id: '',
       observacao: '',
@@ -88,12 +87,8 @@ export function Create() {
     setLoading(true)
     try {
       // Convertendo strings de data para objetos Date
-      const formattedValues = {
-        ...values,
-        data_aluguel: new Date(values.data_aluguel),
-        data_devolucao: new Date(values.data_devolucao),
-      }
-      await createRent(formattedValues)
+
+      await createRent(values as IAluguel)
       toast({
         title: 'Cadastro realizado! ✅',
         description: 'Seu livro foi cadastrado com sucesso!',
@@ -106,6 +101,7 @@ export function Create() {
       setIsOpen(false)
       form.reset()
     } catch (error) {
+      console.error(error)
       toast({
         variant: 'destructive',
         title: 'Erro no cadastro!',
@@ -139,7 +135,7 @@ export function Create() {
                 <FormItem>
                   <FormLabel>Data Aluguel</FormLabel>
                   <FormControl>
-                    <Input type="date" {...field} />
+                    <DatePicker value={field.value} onChange={field.onChange} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -152,7 +148,7 @@ export function Create() {
                 <FormItem>
                   <FormLabel>Data Devolução</FormLabel>
                   <FormControl>
-                    <Input type="date" {...field} />
+                    <DatePicker value={field.value} onChange={field.onChange} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

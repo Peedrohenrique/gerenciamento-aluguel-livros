@@ -97,6 +97,7 @@ export function Edit({
       setLoading(false)
       setIsOpen(false)
     } catch (error) {
+      console.log(error)
       toast({
         variant: 'destructive',
         title: 'Erro na atualização!',
@@ -127,6 +128,7 @@ export function Edit({
       })
       setLoading(false)
     } catch (error) {
+      console.log(error)
       toast({
         variant: 'destructive',
         title: 'Erro ao buscar livro!',
@@ -149,6 +151,7 @@ export function Edit({
       setAuthors(authorProps) // Armazena os autores no estado
       setLoading(false)
     } catch (error) {
+      console.log(error)
       toast({
         variant: 'destructive',
         title: 'Erro ao buscar autores!',
